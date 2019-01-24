@@ -10,7 +10,7 @@ chatPeopleSelectRe = re.compile('[ ][:][ ]')
 
 chatStatisticDics = {}   # 채팅 통계를 위한 딕셔너리를 생성, 여기에는 몇일날 카톡을 주고 받았는지 넣을 예정
 chatStatisticLists = []    # 채팅 통계를 위한 리스트를 생성, 해당일에 누가 카톡을 얼마나 주고받았는지
-chatPeopleLists = []
+chatPeopleLists = []    # 채팅한 사람을 기록하기 위한 리스트를 생
 
 openText = Tk()     # tkinter 모듈을 사용하겠다고 선언
 openText.fileName = filedialog.askopenfile(title = "choose your file")  # 파일 선택 후 경로 저장
@@ -29,6 +29,11 @@ for textLine in textLines:      # 채팅 한줄 한줄 아래에 대입
         chatStatisticDics[matchingCDSR.group()] = str(i) + 'day'     # 채팅했던 날짜를 딕셔너리에 추가
         print(matchingCDSR.group())
     elif matchingTCSR is not None:
+        if matchingTCSR.group(7) in chatPeopleLists:
+            nowListPosition = chatPeopleLists.index(matchingTCSR.group(7))
+            
+        else:
+            chatPeopleLists.append(matchingTCSR.group(7))
 
     # elif bool(searching) == True:
     #     theChatDay = searching.group()[0:12]
@@ -66,3 +71,4 @@ print(matchingTCSR.group(5))
 print(matchingTCSR.group(6))
 print(matchingTCSR.group(7))
 print(matchingTCSR.group(8))
+print(nowListPosition)
