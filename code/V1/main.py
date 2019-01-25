@@ -1,6 +1,8 @@
 from tkinter import filedialog      # Tcl/tk GUI 모듈
 from tkinter import *               # Tcl/tk GUI 모듈
 import re                           # 정규표현식 모듈
+import sqlite3                      # Sqlite3
+
 
 chatDaySelectRe = re.compile('\d{4}년\s\d{1,2}월\s\d{1,2}일\s[월화수목금토일]요일')      # 카카오톡에서 채팅했던 날짜선택하는 정규표현식
 # 카카오톡은 채팅했던 날을 'xxxx년 xx월 x일 x요일'로 그 날 한번 기록
@@ -31,7 +33,7 @@ for textLine in textLines:      # 채팅 한줄 한줄 아래에 대입
     elif matchingTCSR is not None:
         if matchingTCSR.group(7) in chatPeopleLists:
             nowListPosition = chatPeopleLists.index(matchingTCSR.group(7))
-            
+
         else:
             chatPeopleLists.append(matchingTCSR.group(7))
 
@@ -72,3 +74,7 @@ print(matchingTCSR.group(6))
 print(matchingTCSR.group(7))
 print(matchingTCSR.group(8))
 print(nowListPosition)
+
+testcon = sqlite3.connect('test.db')
+
+testcon.close()
