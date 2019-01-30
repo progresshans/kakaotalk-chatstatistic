@@ -22,6 +22,9 @@ print(openText.fileName.name)
 openedText = open(openText.fileName.name, 'r')      # 선택한 파일의 경로로 채팅 파일 불러옴
 textLines = openedText.readlines()      # 선택한 파일의 채팅을 모두 읽어 저장
 
+dbConnectFunc = sqlite3.connect('kakaotalk-chatstatistics.sqlite')
+dbCursor = dbConnectFunc.cursor()
+
 i = 0
 for textLine in textLines:      # 채팅 한줄 한줄 아래에 대입
     matchingCDSR = chatDaySelectRe.match(textLine)     # 채팅했던 날을 찾기
@@ -52,6 +55,7 @@ for textLine in textLines:      # 채팅 한줄 한줄 아래에 대입
     #         theChatText = theChatContent[theChatContentCheckPoint.end():]
 
 
+
 print(textLines)
 openedText.close()
 
@@ -75,6 +79,5 @@ print(matchingTCSR.group(7))
 print(matchingTCSR.group(8))
 print(nowListPosition)
 
-testcon = sqlite3.connect('test.db')
-
-testcon.close()
+dbCursor.close()
+dbConnectFunc.close()
